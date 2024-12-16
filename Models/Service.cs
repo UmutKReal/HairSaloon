@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+//deneme
 namespace BarberSaloon.Models
 {
     public class Service
