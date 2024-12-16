@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberSaloon.Migrations
 {
     [DbContext(typeof(HairSaloonDBContext))]
-    [Migration("20241214204725_FirstMi")]
-    partial class FirstMi
+    [Migration("20241216162224_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,11 @@ namespace BarberSaloon.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()

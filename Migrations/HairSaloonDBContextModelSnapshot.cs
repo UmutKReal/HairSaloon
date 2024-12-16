@@ -51,6 +51,11 @@ namespace BarberSaloon.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

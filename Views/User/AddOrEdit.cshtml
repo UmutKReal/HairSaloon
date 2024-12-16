@@ -1,0 +1,32 @@
+﻿@model BarberSaloon.Models.Customer
+
+@{
+    ViewBag.Title = "Kayıt Ol";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>Kullanıcı Kayıt</h2>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Name, "Kullanıcı Adı")
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Kullanıcı Adınızı Girin" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Surname, "Soyadı")
+                @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", placeholder = "Kullanıcı Soyadınızı Girin" })
+                @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Email, "E-posta")
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-posta Adresinizi Girin" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        }
+    </div>
+</div>
