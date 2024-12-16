@@ -9,15 +9,15 @@ namespace BarberSaloon.Models
 
         [Required(ErrorMessage = "İsim zorunludur.")]
         [MaxLength(30)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required(ErrorMessage = "Soyisim zorunludur.")]
         [MaxLength(30)]
-        public  string Surname { get; set; }
+        public  string? Surname { get; set; }
 
         [Required]
         [RegularExpression("Erkek|Kadın", ErrorMessage = "Cinsiyet sadece 'Erkek' veya 'Kadın' olabilir.")]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
         public ICollection<TotalService> TotalServices { get; set; }
     }
