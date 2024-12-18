@@ -4,10 +4,11 @@ namespace BarberSaloon.Models
 {
     public class UserController : Controller
     {
-        public IActionResult AddOrEdit(int id=0)
+        [HttpGet]
+        public ActionResult Login(int id=0)
         {
-            Customer customerModel = new Customer();
-            return View(customerModel);
+            return View();
         }
+
     }
 }
