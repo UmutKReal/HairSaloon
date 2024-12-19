@@ -33,7 +33,7 @@ namespace BarberSaloon.Controllers
                 // Kullanıcı login
                 if (username == "user" && password == "user123")
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Customer");
                 }
                 else
                 {

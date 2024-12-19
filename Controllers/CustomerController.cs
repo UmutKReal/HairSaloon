@@ -2,20 +2,19 @@
 
 namespace BarberSaloon.Controllers
 {
-    public class AdminController : Controller
+    public class CustomerController : Controller
     {
         public IActionResult Index()
-        { 
-            return View();
-        }
-        public IActionResult RandevuIslemleri()
         {
             return View();
         }
-        public IActionResult PersonelIslemleri()
+        public IActionResult Randevu()
         {
             return View();
         }
-
+        public IActionResult CustomerServis()
+        {
+            return View();
+        }
     }
 }
