@@ -69,6 +69,28 @@
     </thead>
     <tbody>
       <!-- for dongüsüyle olacak kısım -->
+        @if (ViewBag.EmployeeList != null)
+        {
+            foreach (var employee in ViewBag.EmployeeList)
+            {
+                <tr>
+                    <td>@employee.EmployeeId</td>
+                    <td>@employee.Name</td>
+
+                    <td>@employee.Surname</td>
+                    <td>
+                        <a href="/Admin/PersonelGuncelle/@employee.EmployeeId" class="btn btn-primary">Edit</a>
+                        <a href="/Admin/PersonelSil/@employee.EmployeeId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No employees found.</td>
+            </tr>
+        }
     </tbody>
 </table>
 

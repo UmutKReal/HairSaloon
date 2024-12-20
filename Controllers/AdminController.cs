@@ -6,8 +6,12 @@ namespace BarberSaloon.Controllers
     public class AdminController : Controller
     {
         private readonly HairSaloonDBContext _context;
+        public AdminController(HairSaloonDBContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
         public IActionResult Index()
-        { 
+        {
             return View();
         }
         public IActionResult RandevuIslemleri()
@@ -18,7 +22,7 @@ namespace BarberSaloon.Controllers
         [HttpGet]
         public IActionResult PersonelIslemleri()
         {
-          ViewBag.EmployeeList = _context.Employees.ToList();
+            ViewBag.EmployeeList = _context.Employees.ToList();
             return View();
         }
 
@@ -27,12 +31,10 @@ namespace BarberSaloon.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult PersonelIslemleri(Employee employee)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(employee);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(PersonelIslemleri));
-            }
+            _context.Add(employee);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(PersonelIslemleri));
+
             return View("PersonelIslemleri", employee);
         }
 
