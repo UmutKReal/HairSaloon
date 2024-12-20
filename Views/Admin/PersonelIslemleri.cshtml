@@ -1,6 +1,77 @@
-﻿@{
-    ViewBag.Title = "Admin Paneli";
+﻿@model Employee
+
+@{
+    ViewBag.Title = "PersonelIslemleri";
     Layout = "_AdminLayout";
 }
-<h2>Personel İşlemleri Paneline Hoşgeldiniz</h2>
-<p>Burada Personel'e özel işlemler yapılabilir.</p>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Yeni Personel Ekle
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Personel Ekle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Personel ekleme formu burada -->
+                <form asp-action="PersonelIslemleri" method="post">
+            <div class="form-group">
+                <label>İsim</label>
+                <input asp-for="Name" class="form-control" placeholder="İsim giriniz" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Soyad</label>
+                <input asp-for="Surname" class="form-control" placeholder="Soyad giriniz" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Cinsiyet</label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">-- Cinsiyet --</option>
+                    <option value="Erkek">Erkek</option>
+                    <option value="Kadın">Kadın</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+        <!-- Personel ekleme formu burada -->
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Personel Listesi -->
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">İsim</th>
+            <th scope="col">Soyad</th>
+            <th scope="col">Cinsiyet</th>
+            <th scope="col">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+      <!-- for dongüsüyle olacak kısım -->
+    </tbody>
+</table>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

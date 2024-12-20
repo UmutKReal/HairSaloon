@@ -1,6 +1,7 @@
 ﻿using BarberSaloon.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BarberSaloon.Controllers
 {
@@ -24,8 +25,8 @@ namespace BarberSaloon.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "Admin kullanıcı adı veya şifre hatalı!";
-                    return View();
+                    ViewBag.ErrorMessage = "Admin kullanıcı adı veya şifre hatalı!";
+                    return RedirectToAction("Failure");
                 }
             }
             else
@@ -37,10 +38,15 @@ namespace BarberSaloon.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "Kullanıcı adı veya şifre hatalı!";
-                    return View();
+                    ViewBag.ErrorMessage = "Kullanıcı adı veya şifre hatalı!";
+                    return RedirectToAction("Failure");
                 }
             }
+        }
+
+        public IActionResult Failure()
+        {
+            return View();
         }
     }
 }

@@ -5,8 +5,11 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
+
+string connectionString = builder.Configuration.GetConnectionString("ConnectionStrings");
+
 builder.Services.AddDbContext<HairSaloonDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(connectionString)));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
