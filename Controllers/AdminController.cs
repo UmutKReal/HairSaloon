@@ -50,22 +50,25 @@ namespace BarberSaloon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeId,Name,Surname,Gender")] Employee employee)
         {
-            
+            if (!ModelState.IsValid)
+            {
+                return View(employee);
+            }
 
-                if (employee.EmployeeId == 0)
-                {
-                    _context.Add(employee);
-                }
-                else
-                {
-                    _context.Update(employee);
-                }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(PersonelIslemleri));
-            
-            //return View(employee);
-                    
+            if (employee.EmployeeId == 0)
+            {
+                await _context.AddAsync(employee);
+            }
+            else
+            {
+                _context.Update(employee);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(PersonelIslemleri));
         }
+
+
 
         // POST: PersonelSil
         [HttpPost]

@@ -20,6 +20,6 @@ namespace BarberSaloon.Models
         [Required(ErrorMessage = "Cinsiyet Seçiniz")]
         public string Gender { get; set; }
 
-        public ICollection<TotalService> TotalServices { get; set; }
+        //public ICollection<TotalService> TotalServices { get; set; }
     }
 }
