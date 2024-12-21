@@ -1,5 +1,10 @@
 ﻿using BarberSaloon.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BarberSaloon.Controllers
 {
@@ -10,73 +15,71 @@ namespace BarberSaloon.Controllers
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
         public IActionResult Index()
         {
             return View();
         }
+
         public IActionResult RandevuIslemleri()
         {
             return View();
         }
 
-        [HttpGet]
-        public IActionResult PersonelIslemleri()
+        public async Task<IActionResult> PersonelIslemleri()
         {
-            ViewBag.EmployeeList = _context.Employees.ToList();
-            return View();
+            return View(await _context.Employees.ToListAsync());
         }
 
-        // POST: PersonelEkle
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult PersonelIslemleri(Employee employee)
-        {
-            _context.Add(employee);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(PersonelIslemleri));
-
-            return View("PersonelIslemleri", employee);
-        }
-
-        // GET: PersonelEkle for update
+        // GET: Personel/AddOrEdit
         [HttpGet]
-        public IActionResult PersonelGuncelle(int id)
+        public IActionResult PersonelEkle_Duzenle(int id = 0)
         {
-            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == id);
-            if (employee == null)
+            if (id == 0)
             {
-                return NotFound();
+                return View(new Employee());
             }
-            return View(employee);
+            else
+            {
+                return View(_context.Employees.Find(id));
+            }
         }
 
-        // POST: PersonelGuncelle
+        // POST: Personel/AddOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PersonelGuncelle(Employee employee)
+        public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeId,Name,Surname,Gender")] Employee employee)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Update(employee);
-                _context.SaveChanges();
+            
+
+                if (employee.EmployeeId == 0)
+                {
+                    _context.Add(employee);
+                }
+                else
+                {
+                    _context.Update(employee);
+                }
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(PersonelIslemleri));
-            }
-            return View(employee);
+            
+            //return View(employee);
+                    
         }
 
-        // GET: PersonelIslemleri/Delete
-        [HttpGet]
-        public IActionResult PersonelSil(int id)
+        // POST: PersonelSil
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PersonelSil(int id)
         {
-            var employee = _context.Employees.FirstOrDefault(e => e.EmployeeId == id);
+            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
             if (employee == null)
             {
                 return NotFound();
             }
             _context.Employees.Remove(employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(PersonelIslemleri));
         }
-
     }
 }

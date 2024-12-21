@@ -25,50 +25,66 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" id="loginTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#userLoginTab" role="tab" aria-controls="user" aria-selected="true">Kullanıcı Girişi</a>
+        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#userLoginTab"
+           role="tab" aria-controls="user" aria-selected="true">
+            Kullanıcı Girişi
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="admin-tab" data-toggle="tab" href="#adminLoginTab" role="tab" aria-controls="admin" aria-selected="false">Admin Girişi</a>
+        <a class="nav-link" id="admin-tab" data-toggle="tab" href="#adminLoginTab"
+           role="tab" aria-controls="admin" aria-selected="false">
+            Admin Girişi
+        </a>
     </li>
 </ul>
 
 <!-- Tab Content -->
 <div class="tab-content" id="loginTabContent">
 
-    <!-- Kullanıcı Login Formu -->
+    <!-- Kullanıcı Login Formu (DB Bağlantılı, Email + Şifre) -->
     <div class="tab-pane fade show active p-3" id="userLoginTab" role="tabpanel" aria-labelledby="user-tab">
         <h3>Kullanıcı Girişi</h3>
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        @using (Html.BeginForm("UserLogin", "Account", FormMethod.Post))
         {
+            <!-- roleType veya benzeri parametre kullanabilirsiniz -->
             @Html.Hidden("roleType", "user")
+
             <div class="form-group">
-                <label for="usernameUser">Kullanıcı Adı</label>
-                <input type="text" name="username" id="usernameUser" class="form-control" />
+                <label for="emailUser">Email</label>
+                <input type="text" name="email" id="emailUser" class="form-control" />
             </div>
+
             <div class="form-group">
                 <label for="passwordUser">Şifre</label>
                 <input type="password" name="password" id="passwordUser" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-success">Kullanıcı Giriş</button>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Kullanıcı Giriş</button>
+                <!-- Yalnızca Kullanıcı sekmesinde gözükecek Kayıt Ol butonu -->
+                <a class="btn btn-primary" href="@Url.Action("Register", "Account")">
+                    Kayıt Ol
+                </a>
+            </div>
         }
     </div>
 
-    <!-- Admin Login Formu -->
+    <!-- Admin Login Formu (Veritabanından bağımsız) -->
     <div class="tab-pane fade p-3" id="adminLoginTab" role="tabpanel" aria-labelledby="admin-tab">
         <h3>Admin Girişi</h3>
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        @using (Html.BeginForm("AdminLogin", "Account", FormMethod.Post))
         {
-            @Html.Hidden("roleType", "admin")
             <div class="form-group">
                 <label for="usernameAdmin">Kullanıcı Adı</label>
                 <input type="text" name="username" id="usernameAdmin" class="form-control" />
             </div>
+
             <div class="form-group">
                 <label for="passwordAdmin">Şifre</label>
                 <input type="password" name="password" id="passwordAdmin" class="form-control" />
             </div>
+
             <button type="submit" class="btn btn-primary">Admin Giriş</button>
         }
     </div>
-
 </div>

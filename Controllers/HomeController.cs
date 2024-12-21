@@ -20,7 +20,7 @@ namespace BarberSaloon.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            return View("~/Views/Account/Login.cshtml");
         }
         public IActionResult Servis()
         {

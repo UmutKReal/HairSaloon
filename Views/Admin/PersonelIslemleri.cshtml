@@ -1,99 +1,51 @@
-﻿@model Employee
+﻿@model IEnumerable<BarberSaloon.Models.Employee>
 
 @{
     ViewBag.Title = "PersonelIslemleri";
     Layout = "_AdminLayout";
 }
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Yeni Personel Ekle
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Personel Ekle</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Personel ekleme formu burada -->
-                <form asp-action="PersonelIslemleri" method="post">
-            <div class="form-group">
-                <label>İsim</label>
-                <input asp-for="Name" class="form-control" placeholder="İsim giriniz" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label>Soyad</label>
-                <input asp-for="Surname" class="form-control" placeholder="Soyad giriniz" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label>Cinsiyet</label>
-                <select asp-for="Gender" class="form-control">
-                    <option value="">-- Cinsiyet --</option>
-                    <option value="Erkek">Erkek</option>
-                    <option value="Kadın">Kadın</option>
-                </select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                <button type="submit" class="btn btn-primary">Kaydet</button>
-            </div>
-        </form>
-        <!-- Personel ekleme formu burada -->
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- Personel Listesi -->
-<table class="table table-dark table-striped">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">İsim</th>
-            <th scope="col">Soyad</th>
-            <th scope="col">Cinsiyet</th>
-            <th scope="col">İşlem</th>
-        </tr>
-    </thead>
-    <tbody>
-      <!-- for dongüsüyle olacak kısım -->
-        @if (ViewBag.EmployeeList != null)
-        {
-            foreach (var employee in ViewBag.EmployeeList)
-            {
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>Personel Listesi</h1>
+        <table class="table table-dark table-striped">
+            <thead>
                 <tr>
-                    <td>@employee.EmployeeId</td>
-                    <td>@employee.Name</td>
-
-                    <td>@employee.Surname</td>
-                    <td>
-                        <a href="/Admin/PersonelGuncelle/@employee.EmployeeId" class="btn btn-primary">Edit</a>
-                        <a href="/Admin/PersonelSil/@employee.EmployeeId" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">İsim</th>
+                    <th scope="col">Soyad</th>
+                    <th scope="col">Cinsiyet</th>
+                    <th>
+                        <a asp-action="PersonelEkle_Duzenle" class="btn btn-sm btn-success">
+                           Yeni
+                        </a>
+                    </th>
                 </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="4">No employees found.</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-}
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                        <tr>
+                            <td>@employee.EmployeeId</td>
+                            <td>@employee.Name</td>
+                            <td>@employee.Surname</td>
+                            <td>@employee.Gender</td>
+                            <td>
+                                <form asp-action="PersonelSil" asp-route-id="@employee.EmployeeId">
+                                    <div class="btn-group btn-group-sm">
+                                    <a asp-action="PersonelEkle_Duzenle" asp-route-id="@employee.EmployeeId" class="btn btn-warning">
+                                           Düzenle
+                                        </a>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
+                                            Sil
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
