@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BarberSaloon.Controllers
 {
@@ -32,6 +34,18 @@ namespace BarberSaloon.Controllers
                 return View(model);
             }
 
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                ModelState.AddModelError("Password", "Şifre boş olamaz.");
+                return View(model);
+            }
+
+            var customer = new Customer
+            {
+                Email = model.Email,
+                Password = model.Password // Şifre hash'ini sakla
+            };
+
             // 3. Yeni müşteri ekle (burada şifre alanı gösterilmedi, isterseniz ekleyebilirsiniz)
             _context.Customers.Add(model);
             await _context.SaveChangesAsync();
@@ -56,17 +70,43 @@ namespace BarberSaloon.Controllers
                 else
                 {
                     ViewBag.ErrorMessage = "Admin kullanıcı adı veya şifre hatalı!";
-                    return RedirectToAction("Failure");
+                    return RedirectToAction("Failure", "Account");
                 }
         }
-  
-        [HttpGet]
+
         public IActionResult Login()
         {
             return View();
         }
-        
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UserLogin(string email, string password)
+        {
+            // 1. Email ve şifre kontrolü
+            var user = await _context.Customers
+                .Where(c => c.Email == email)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                // Eğer kullanıcı bulunamazsa, hata mesajı ver
+                ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
+                return View();
+            }
+
+            // 2. Şifre doğrulaması
+            if (password!=user.Password)
+            {
+                // Şifre yanlışsa, hata mesajı ver
+                ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
+                return View();
+            }
+
+            // 3. Giriş başarılıysa, kullanıcıyı yönlendirelim (örneğin anasayfaya)
+            TempData["SuccessMessage"] = "Giriş başarılı!";
+            return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir
+        }
 
         public IActionResult Failure()
         {

@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Kullanıcı Girişi";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<h2 class="mb-4">Kullanıcı Girişi</h2>
+
+<!-- Başarı veya hata mesajını görüntüleme -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (ViewData.ModelState != null && ViewData.ModelState.IsValid == false)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<!-- Login Form -->
+@using (Html.BeginForm("UserLogin", "Account", FormMethod.Post))
+{
+    @Html.Hidden("roleType", "user") <!-- Gizli alan (isteğe bağlı) -->
+
+    <div class="form-group">
+        <label for="emailUser">E-posta</label>
+        <input type="text" name="email" id="emailUser" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="passwordUser">Şifre</label>
+        <input type="password" name="password" id="passwordUser" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Giriş Yap</button>
+    </div>
+
+    <!-- Kayıt Olma linki -->
+    <div>
+        <a href="@Url.Action("Register", "Account")" class="btn btn-primary">Kayıt Ol</a>
+    </div>
+}
