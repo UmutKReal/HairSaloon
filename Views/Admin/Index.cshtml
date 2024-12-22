@@ -1,8 +1,46 @@
-﻿@{
+﻿@model IEnumerable<BarberSaloon.Models.Service>
+@{
     ViewBag.Title = "Admin Paneli";
     Layout = "_AdminLayout";
 }
 
 <h2>Admin Paneline Hoşgeldiniz</h2>
-<p>Burada admin'e özel işlemler yapılabilir.</p>
-@*aaaaaaaaaaaaaaaaa*@
+<p>Admin panelinde ihtiyacınz olaan tüm işlevleri gerçekleştirebilirsiniz.</p>
+
+<h2>Servis Listesi</h2>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Servis Adı</th>
+            <th>Süre (dk)</th>
+            <th>Ücret (TL)</th>
+            <th><a asp-action="AddService" class="btn btn-sm btn-success">  Ekle </a></th>
+        </tr>        
+    </thead>
+    <tbody>
+        @if(Model != null)
+        {  
+            @foreach (var service in Model)
+            {
+                <tr>
+                    <td>@service.ServiceId</td>
+                    <td>@service.ServiceName</td>
+                    <td>@service.ServiceDuration</td>
+                    <td>@service.ServicePrice</td>
+                    <td>
+                        <form asp-action="DeleteService" asp-route-id="@service.ServiceId">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-action="AddService" asp-route-id="@service.ServiceId" class="btn btn-warning">  Düzenle </a>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
+                                    Sil
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

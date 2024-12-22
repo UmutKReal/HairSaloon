@@ -6,6 +6,24 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<style>
+    body {
+        background-color: #2c2c2c; /* Light dark arka plan rengi */
+        color: #fff; /* Yazı rengini beyaz yap */
+    }
+
+    
+    .container {
+        max-width: 50%; /* Sayfanın %90'ını kaplar */
+        border-radius: 10px; /* Kutunun köşelerini yumuşatır */
+        margin: 0 auto; /* Ortalar */
+        padding: 20px;
+        background-color: #1a1a1a; /* İçerik kutusunun arka plan rengi */
+    }
+
+</style>
+
+
 <h2 class="mb-4">Giriş Sayfası</h2>
 
 @if (TempData["SuccessMessage"] != null)

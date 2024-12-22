@@ -16,9 +16,9 @@ namespace BarberSaloon.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Services.ToListAsync());
         }
 
         public IActionResult RandevuIslemleri()
@@ -50,11 +50,8 @@ namespace BarberSaloon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeId,Name,Surname,Gender")] Employee employee)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(employee);
-            }
-
+            if (!ModelState.IsValid) return View(employee);
+           
             if (employee.EmployeeId == 0)
             {
                 await _context.AddAsync(employee);
@@ -67,8 +64,6 @@ namespace BarberSaloon.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(PersonelIslemleri));
         }
-
-
 
         // POST: PersonelSil
         [HttpPost]
@@ -84,5 +79,51 @@ namespace BarberSaloon.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(PersonelIslemleri));
         }
+
+        //ADD AND EDİT
+        [HttpGet]
+        public IActionResult AddService(int id = 0)
+        {
+            if ( id == 0 )
+            {
+                return View(new Service());
+            }
+            else
+            {
+                 return View(_context.Services.Find(id));
+            }
+          
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddService(Service service)
+        {
+            //if (!ModelState.IsValid)  return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
+            if (service.ServiceId == 0)
+            {
+                await _context.Services.AddAsync(service); // Servisi asenkron olarak ekle            
+            }
+            else
+            {
+                 _context.Services.Update(service);
+            }
+             await _context.SaveChangesAsync(); // Veritabanı değişikliklerini kaydet
+             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteService(int id)
+        {
+            var service = await _context.Services.FindAsync(id); // ID'ye göre servisi asenkron olarak bul
+            if (service == null)
+            {
+                return NotFound();
+            }
+            _context.Services.Remove(service); // Servisi kaldır
+            await _context.SaveChangesAsync(); // Değişiklikleri kaydet
+            return RedirectToAction("Index");
+        }
+
     }
 }

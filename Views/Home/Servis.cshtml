@@ -1,5 +1,154 @@
 ﻿
-@{
-    Layout = "_Layout";
-    <p>Servis</p>
-}
+<style>
+
+    /* Buton */
+    .btn {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        border: 2px solid #fff;
+        color: #fff;
+        background-color: transparent;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+    }
+
+       .btn:hover {
+            background-color: #FF5733; /* Hover sırasında butonun rengi */
+            border-color: #FF5733;
+        }
+
+    img {
+        margin: 20px auto; /* Üst, alt ve yan boşluk */
+        display: block; /* Ortalamak için blok yap */
+        border-radius: 15px; /* Yuvarlatılmış köşeler */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölgelendirme */
+    }
+
+    
+
+    .card {
+        border-radius: 15px; /* Kart köşelerini yumuşatır */
+        background-color: #1a1a1a; /* Koyu arka plan */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Hafif gölge */
+    }
+
+
+    img {
+        border-radius: 15px; /* Köşeleri yuvarlar */
+        box-shadow: 0 0 20px 10px rgba(255, 87, 51, 0.6); /* Glow efekti */
+        margin: 20px auto; /* Görsellerin etrafında boşluk */
+        display: block; /* Ortalamak için blok yap */
+        transition: box-shadow 0.3s ease; /* Efekti yumuşatır */
+    }
+
+        /* Hover'da glow efekti artırma */
+        img:hover {
+            box-shadow: 0 0 30px 15px rgba(255, 87, 51, 0.9); /* Hover sırasında parlama artar */
+        }
+
+
+
+    h2 {
+        font-weight: bold; /* Başlığı vurgular */
+        margin-bottom: 20px;
+    }
+
+    ul li {
+        font-size: 1.2rem; /* Yazı boyutunu büyütür */
+        font-weight: bold; /* Yazıları kalın yapar */
+        margin-bottom: 10px; /* Elemanlar arasında boşluk */
+        text-transform: capitalize; /* İlk harfi büyük yapar */
+        color: #fff; /* Yazı rengini beyaz yapar (isteğe bağlı) */
+    }
+
+    
+    p {
+        padding: 0 20px; /* Sol ve sağ tarafa 20px boşluk ekler */
+    }
+
+
+
+</style>
+
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <img src="~/Images/HairStyling.png" class="img-fluid rounded" alt="Saç Şekillendirme">
+    </div>
+    <div class="col-md-6 text-white">
+        <h2>SAÇ ŞEKİLLENDİRME</h2>
+        <p>Deneyimli stilistlerimiz, tercihlerinize uygun geniş bir saç stili yelpazesi oluşturma konusunda uzmandır. İster modern bir kesim, ister klasik bir topuz, ister özel bir gün için saç modeli arıyor olun, vizyonunuzu hayata geçirmek için buradayız. Detaylara dikkat eden ekibimiz, saç dokuları ve yüz şekilleri konusunda derin bir anlayışa sahiptir ve saç modelinizin sadece bir görünüm değil, bir deneyim olmasını sağlar.</p>
+        <ul>
+            <li>Kişiselleştirilmiş Stiller</li>
+            <li>Modern ve Çok Yönlü</li>
+            <li>Son Dokunuşlar</li>
+        </ul>
+        <a href="#" class="btn btn-warning mt-3">Randevu Al</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <img src="~/Images/HairCut.png" class="img-fluid rounded" alt="Saç Kesimi">
+    </div>
+    <div class="col-md-6 text-white">
+        <h2>SAÇ KESİMİ</h2>
+        <p>Trim & Style'da, keskin ve kendinden emin bir görünüm sağlayan hassas saç kesimleri sunmaktan gurur duyuyoruz. Yetenekli berberlerimiz, en son kesim teknikleri ve stilleri konusunda eğitimlidir ve yüz şeklinize, saç tipinize ve kişisel tarzınıza uygun bir saç kesimi almanızı sağlar.</p>
+        <ul>
+            <li>Kişiselleştirilmiş Saç Kesimleri</li>
+            <li>Temiz ve Hassas</li>
+            <li>Yenile ve Dönüştür</li>
+        </ul>
+        <a href="#" class="btn btn-warning mt-3">Randevu Al</a>
+    </div>
+    
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <img src="~/Images/BeardTrim.png" class="img-fluid rounded" alt="Sakal Şekillendirme">
+    </div>
+    <div class="col-md-6 text-white">
+        <h2>SAKAL ŞEKİLLENDİRME</h2>
+        <p>Sakal bakım hizmetlerimiz, iyi görünüm ve düzenli bir görünüme ulaşmanıza yardımcı olmak için tasarlanmıştır. Deneyimli berberlerimiz, yüz hatlarınızı vurgulamak ve düzenli bir sakal görünümü elde etmek için sakal şekillendirme, düzeltme ve detaylandırma konusunda uzmanlaşmıştır.</p>
+        <ul>
+            <li>Uzman Sakal Şekillendirme</li>
+            <li>Bakım ve Temizlik</li>
+            <li>Kişisel Öneriler</li>
+        </ul>
+        <a href="#" class="btn btn-warning mt-3">Randevu Al</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <img src="~/Images/HairWash.png" class="img-fluid rounded" alt="Saç Yıkama">
+    </div>
+    <div class="col-md-6 text-white">
+        <h2>SAÇ YIKAMA</h2>
+        <p>Arkanıza yaslanın ve sizi canlandırıcı bir saç yıkama deneyimiyle şımartmamıza izin verin. Saç yıkama hizmetimiz sadece temizlikle kalmaz; saçlarınızı ve saç derinizi canlandırır, tazelenmiş ve beslenmiş hissettirir.</p>
+        <ul>
+            <li>Derinlemesine Temizlik ve Besleme</li>
+            <li>Rahatlama ve Yenilenme</li>
+            <li>Sağlıklı Saç Bakımı</li>
+        </ul>
+        <a href="#" class="btn btn-warning mt-3">Randevu Al</a>
+    </div>
+    
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <img src="~/Images/HairPaint.jpeg" class="img-fluid rounded" alt="Saç Boyama">
+    </div>
+    <div class="col-md-6 text-white">
+        <h2>SAÇ BOYAMA</h2>
+        <p>Hayalinizdeki saç rengini gerçeğe dönüştürmek için buradayız! Profesyonel saç boyama hizmetimizle, saçlarınıza sağlıklı ve göz alıcı bir görünüm kazandırıyoruz. Uzman ekibimiz, en son trendleri takip ederek size özel renkler ve tekniklerle unutulmaz bir stil yaratır. İster doğal tonlar, ister çarpıcı renkler arıyor olun, ihtiyacınıza uygun çözümler sunuyoruz. Saç boyama sürecinde kullanılan kaliteli ürünlerimiz, saçlarınızın hem güzel görünmesini hem de sağlıklı kalmasını sağlar.</p>
+        <ul>
+            <li>Kişiye Özel Renk Danışmanlığı</li>
+            <li>Doğal ve Kalıcı Renkler</li>
+            <li>Saç Sağlığını Korumaya Yönelik Bakım</li>
+        </ul>
+        <a href="#" class="btn btn-warning mt-3">Randevu Al</a>
+    </div>
+</div>
