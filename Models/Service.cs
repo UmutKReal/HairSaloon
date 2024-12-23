@@ -1,19 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-//deneme
+﻿using BarberSaloon.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BarberSaloon.Models
 {
     public class Service
     {
         [Key]
-        public int ServiceId { get; set; }
+        public int ServiceID { get; set; }
 
-        [Required(ErrorMessage = "Servis türü girmek zorunlududr")]
-        public string ServiceName { get; set; }
+        [Required]
+        public string? ServiceName { get; set; }
 
-        public int ServiceDuration  { get; set; }
-        public int ServicePrice { get; set; }
+        [Required]
+        public int ServiceDuration { get; set; } // Süreyi dakika cinsinden belirtin
 
-        public ICollection<TotalService> TotalServices { get; set; }
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal ServicePrice { get; set; }
+
+        // Bire çok ilişki için Navigation Property
+        public ICollection<AppointmentDateTime>? AppointmentDateTimes { get; set; }
+
+        // Employee ile bire çok ilişki için Foreign Key
+        public int EmployeeID { get; set; }
+
+        [ForeignKey("EmployeeID")]
+        public Employee? Employee { get; set; }
     }
 }

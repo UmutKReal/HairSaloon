@@ -1,4 +1,5 @@
 ﻿using BarberSaloon.Models;
+using BarberSaloon.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace BarberSaloon.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly HairSaloonDBContext _context;
-        public AccountController(HairSaloonDBContext context)
+        private readonly BarberSaloonDBContext _context;
+        public AccountController(BarberSaloonDBContext context)
         {
             _context = context;
         }

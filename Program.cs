@@ -1,3 +1,4 @@
+using BarberSaloon.Data;
 using BarberSaloon.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,10 +7,10 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
 
-string connectionString = builder.Configuration.GetConnectionString("ConnectionStrings");
+//string connectionString = builder.Configuration.GetConnectionString("ConnectionStrings");
 
-builder.Services.AddDbContext<HairSaloonDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString(connectionString)));
+builder.Services.AddDbContext<BarberSaloonDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

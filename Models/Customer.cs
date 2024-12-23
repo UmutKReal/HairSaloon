@@ -1,35 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+﻿using BarberSaloon.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BarberSaloon.Models
 {
     public class Customer
     {
         [Key]
-        public int CustomerId { get; set; } 
-
-        [Required(ErrorMessage = "İsim zorunludur.")]
-        [MaxLength(30)]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage ="Email Gereklidir")]
-        [MaxLength(100)]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Soyisim zorunludur.")]
-        [MaxLength(30)]
-        public string Surname { get; set; }
+        public int CustomerID { get; set; }
 
         [Required]
-        [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Telefon numarası yanlıştır")]
-        public string PhoneNumber { get; set; }
+        public string? Name { get; set; }
 
         [Required]
-        [RegularExpression("Erkek|Kadın", ErrorMessage = "Cinsiyet sadece 'Erkek' veya 'Kadın' olabilir.")]
-        public string Gender { get; set; }
+        public string? Surname { get; set; }
 
         [Required]
-        public string Password { get; set; }
-        public ICollection<Appointment>  Appointments { get; set; }     //Navi
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        [Phone]
+        public string? PhoneNumber { get; set; }
+
+        [Required]
+        public string? Gender { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
+
+        // Bire bir ilişki için Navigation Property
+        public Appointment? Appointment { get; set; }
     }
 }

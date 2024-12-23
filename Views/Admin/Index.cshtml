@@ -25,14 +25,14 @@
             @foreach (var service in Model)
             {
                 <tr>
-                    <td>@service.ServiceId</td>
+                    <td>@service.ServiceID</td>
                     <td>@service.ServiceName</td>
                     <td>@service.ServiceDuration</td>
                     <td>@service.ServicePrice</td>
                     <td>
-                        <form asp-action="DeleteService" asp-route-id="@service.ServiceId">
+                        <form asp-action="DeleteService" asp-route-id="@service.ServiceID">
                             <div class="btn-group btn-group-sm">
-                                <a asp-action="AddService" asp-route-id="@service.ServiceId" class="btn btn-warning">  Düzenle </a>
+                                <a asp-action="AddService" asp-route-id="@service.ServiceID" class="btn btn-warning">  Düzenle </a>
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
                                     Sil
                                 </button>

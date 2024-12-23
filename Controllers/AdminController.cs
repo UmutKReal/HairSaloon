@@ -5,13 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BarberSaloon.Models;
+using BarberSaloon.Data;
 
 namespace BarberSaloon.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly HairSaloonDBContext _context;
-        public AdminController(HairSaloonDBContext context)
+        private readonly BarberSaloonDBContext _context;
+        public AdminController(BarberSaloonDBContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -48,11 +50,11 @@ namespace BarberSaloon.Controllers
         // POST: Personel/AddOrEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeId,Name,Surname,Gender")] Employee employee)
+        public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeID,Name,Surname,Gender")] Employee employee)
         {
             if (!ModelState.IsValid) return View(employee);
            
-            if (employee.EmployeeId == 0)
+            if (employee.EmployeeID == 0)
             {
                 await _context.AddAsync(employee);
             }
@@ -70,7 +72,7 @@ namespace BarberSaloon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PersonelSil(int id)
         {
-            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeID == id);
             if (employee == null)
             {
                 return NotFound();
@@ -100,7 +102,7 @@ namespace BarberSaloon.Controllers
         public async Task<IActionResult> AddService(Service service)
         {
             //if (!ModelState.IsValid)  return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
-            if (service.ServiceId == 0)
+            if (service.ServiceID == 0)
             {
                 await _context.Services.AddAsync(service); // Servisi asenkron olarak ekle            
             }
@@ -124,6 +126,5 @@ namespace BarberSaloon.Controllers
             await _context.SaveChangesAsync(); // Değişiklikleri kaydet
             return RedirectToAction("Index");
         }
-
     }
 }
