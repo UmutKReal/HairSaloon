@@ -101,7 +101,7 @@ namespace BarberSaloon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddService(Service service)
         {
-            //if (!ModelState.IsValid)  return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
+            if (!ModelState.IsValid)  return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
             if (service.ServiceID == 0)
             {
                 await _context.Services.AddAsync(service); // Servisi asenkron olarak ekle            

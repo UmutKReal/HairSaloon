@@ -1,5 +1,6 @@
 using BarberSaloon.Data;
 using BarberSaloon.Models;
+using BarberSaloon.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,16 +12,24 @@ builder.Services.AddSession();
 
 builder.Services.AddDbContext<BarberSaloonDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+
+// Register services in the DI container
+builder.Services.AddHttpClient();  // Registers HttpClient for dependency injection
+builder.Services.AddScoped<LightXService>();  // Register the LightXService
+builder.Services.AddControllersWithViews();  // Add MVC controllers and views   Add services to the container.
+// Read the API key from appsettings.json
+builder.Services.Configure<LightXApiSettings>(builder.Configuration.GetSection("LightXApi"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

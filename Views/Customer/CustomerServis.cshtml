@@ -1,5 +1,63 @@
-﻿
-@{
+﻿@{
+    ViewData["Title"] = "Hairstyle Generator";
     Layout = "_CustomerLayout";
-    <p>Servis</p>
 }
+
+<h2>Hairstyle Generator</h2>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" id="imageInput" name="image" accept="image/*" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="text" id="textPrompt" name="textPrompt" placeholder="Enter your text prompt" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" onclick="uploadImage()">Upload Image</button>
+</form>
+
+<div id="response" style="margin-top: 20px;">
+    <!-- API response will be displayed here -->
+</div>
+
+<script>
+    async function uploadImage() {
+        const imageInput = document.getElementById('imageInput');
+        const textPrompt = document.getElementById('textPrompt').value;
+
+        if (!imageInput.files[0] || !textPrompt) {
+            document.getElementById('response').innerHTML = '<div class="alert alert-danger">Both image and text prompt are required.</div>';
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', imageInput.files[0]);
+        formData.append('textPrompt', textPrompt);
+
+        try {
+            const response = await fetch('/Customer/UploadImage', { // Ensure the correct route
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('response').innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>API Response:</strong>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>`;
+            } else {
+                const errorText = await response.text();
+                document.getElementById('response').innerHTML = `
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> ${errorText}
+                        </div>`;
+            }
+        } catch (error) {
+            document.getElementById('response').innerHTML = `
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> ${error.message}
+                    </div>`;
+        }
+    }
+</script>
