@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Adım 1 - Servis & Berber Seç";
+    Layout = "_CustomerLayout";
+}
+
+<h2>Adım 1 - Servis & Berber Seç</h2>
+
+@using (Html.BeginForm("SelectServiceAndBarber", "Customer", FormMethod.Post))
+{
+    <div>
+        <label for="ServiceID">Hizmet Seç:</label>
+        @Html.DropDownList("ServiceID", ViewBag.ServiceList as SelectList,
+                "Lütfen hizmet seçin", new { @class = "form-control" })
+    </div>
+
+    <div>
+        <label for="EmployeeID">Berber Seç:</label>
+        @Html.DropDownList("EmployeeID", ViewBag.BarberList as SelectList,
+                "Lütfen berber seçin", new { @class = "form-control" })
+    </div>
+
+    <button type="submit">Devam Et</button>
+}

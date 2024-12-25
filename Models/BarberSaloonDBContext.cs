@@ -10,6 +10,7 @@ namespace BarberSaloon.Data
         public DbSet<AppointmentDateTime> AppointmentDateTimes { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<AppointmentDateTimeEmployee> appointmentDateTimeEmployees { get; set; }
 
         public BarberSaloonDBContext(DbContextOptions<BarberSaloonDBContext> options)
             : base(options)
@@ -44,7 +45,7 @@ namespace BarberSaloon.Data
 
             // 4. AppointmentDateTime ile Employee arasında bire çok ilişki
             // 4. AppointmentDateTime ile Employee arasında bire çok ilişki
-            modelBuilder.Entity<AppointmentDateTime>()
+            modelBuilder.Entity<AppointmentDateTimeEmployee>()
                 .HasOne(adt => adt.Employee)
                 .WithMany(e => e.AppointmentDateTimes)
                 .HasForeignKey(adt => adt.EmployeeID)

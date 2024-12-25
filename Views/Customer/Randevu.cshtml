@@ -1,5 +1,33 @@
-﻿@{
-	Layout = "_CustomerLayout";
-}
+﻿@* @model IEnumerable<BarberSaloon.Models.Customer>
+@ barberSaloonDB.Employees
+                .Include(e => e.AppointmentDateTimes)
+                .ThenInclude(adt => adt.Appointment)
+                .Include(e => e.AppointmentDateTimes)
+                .ThenInclude(adt => adt.Service)
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
 
-<p>Randevu</p>
+<h2>Mevcut Randevular</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kullanıcı</th>
+            <th>Servis</th>
+            <th>Berber</th>
+            <th>Tarih Saat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Appointment.AppointmentID</td>
+                <td>@item.Appointment.CustomerID</td>
+                <td>@item.Appointment.AppointmentDateTimes</td>
+                <td>@item.Appointment.AppointmentDateTimes./td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

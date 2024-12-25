@@ -10,16 +10,7 @@ namespace BarberSaloon.Models
         public int AppointmentDTID { get; set; }
 
         [Required]
-        public int Month { get; set; }
-
-        [Required]
-        public int Day { get; set; }
-
-        [Required]
-        public int Hour { get; set; }
-
-        [Required]
-        public int Minute { get; set; }
+        public DateTime AppointmentDate {  get; set; }
 
         // Foreign key to Appointment
         public int AppointmentID { get; set; }
@@ -32,11 +23,5 @@ namespace BarberSaloon.Models
 
         [ForeignKey("ServiceID")]
         public Service Service { get; set; }
-
-        // Foreign key to Employee (Bire bir ilişki)
-        public int EmployeeID { get; set; }
-
-        [ForeignKey("EmployeeID")]
-        public Employee Employee { get; set; }
     }
 }

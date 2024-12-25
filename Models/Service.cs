@@ -20,12 +20,12 @@ namespace BarberSaloon.Models
         public decimal ServicePrice { get; set; }
 
         // Bire çok ilişki için Navigation Property
-        public ICollection<AppointmentDateTime>? AppointmentDateTimes { get; set; }
+        public ICollection<AppointmentDateTime> AppointmentDateTimes { get; set; }
 
         // Employee ile bire çok ilişki için Foreign Key
         public int EmployeeID { get; set; }
 
         [ForeignKey("EmployeeID")]
-        public Employee? Employee { get; set; }
+        public Employee Employee { get; set; }
     }
 }

@@ -88,7 +88,7 @@ namespace BarberSaloon.Controllers
             var user = await _context.Customers
                 .Where(c => c.Email == email)
                 .FirstOrDefaultAsync();
-
+            TempData["UserId"] = user.CustomerID;
             if (user == null)
             {
                 // Eğer kullanıcı bulunamazsa, hata mesajı ver
@@ -104,6 +104,7 @@ namespace BarberSaloon.Controllers
                 return View();
             }
 
+            TempData["CustomerID"] = user.CustomerID;
             // 3. Giriş başarılıysa, kullanıcıyı yönlendirelim (örneğin anasayfaya)
             TempData["SuccessMessage"] = "Giriş başarılı!";
             return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir

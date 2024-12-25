@@ -30,6 +30,6 @@ namespace BarberSaloon.Models
         public string? Password { get; set; }
 
         // Bire bir ilişki için Navigation Property
-        public Appointment? Appointment { get; set; }
+        public Appointment Appointment { get; set; }
     }
 }

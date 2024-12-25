@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Adım 2 - Zaman Seç";
+    Layout = "_CustomerLayout";
+}
+
+<h2>Adım 2 - Zaman Seç</h2>
+
+<p><strong>Seçilen Servis:</strong> @ViewBag.ServiceName (@ViewBag.Duration dk)</p>
+<p><strong>Seçilen Berber:</strong> @ViewBag.BarberName</p>
+
+@using (Html.BeginForm("SelectTimeSlot", "Customer", FormMethod.Post))
+{
+    <label for="selectedTime">Randevu Saati:</label>
+    <select id="selectedTime" name="selectedTime">
+        @foreach (var dt in ViewBag.AvailableSlots as List<DateTime>)
+        {
+            // Gösterim formatı dd/MM/yyyy HH:mm
+            <option value="@dt.ToString("s")">@dt.ToString("dd/MM/yyyy HH:mm")</option>
+        }
+    </select>
+
+    <button type="submit">Randevuyu Kaydet</button>
+}

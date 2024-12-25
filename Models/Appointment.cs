@@ -14,9 +14,9 @@ namespace BarberSaloon.Models
         public int CustomerID { get; set; }
 
         [ForeignKey("CustomerID")]
-        public Customer? Customer { get; set; }
+        public Customer Customer { get; set; }
 
         // Bire çok ilişki için Navigation Property
-        public ICollection<AppointmentDateTime>? AppointmentDateTimes { get; set; }
+        public ICollection<AppointmentDateTime> AppointmentDateTimes { get; set; }
     }
 }
