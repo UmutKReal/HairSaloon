@@ -1,0 +1,25 @@
+﻿@model BarberSaloon.Services.ImageViewModel
+@{
+    ViewData["Title"] = "Generated Image Result";
+    Layout = "_CustomerLayout";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.ImageUrl != null)
+{
+    <div class="text-center">
+        <img src="@Model.ImageUrl" alt="Generated Image" class="img-fluid">
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("CustomerServis", "Customer")" class="btn btn-secondary">Try Another Image</a>
+</div>

@@ -1,15 +1,28 @@
 ﻿using BarberSaloon.Data;
 using BarberSaloon.Models;
+using BarberSaloon.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace BarberSaloon.Controllers
 {
     public class CustomerController : Controller
     {
+        // Varsayılan olarak bir veritabanı context'i (Entity Framework vb.)
+        private readonly BarberSaloonDBContext barberSaloonDB;
+        private readonly OpenAiImageService _imageService;
+        private readonly ILogger<CustomerController> _logger; // Logger tanımı
+
+        public CustomerController(BarberSaloonDBContext context, OpenAiImageService imageService, ILogger<CustomerController> logger)
+        {
+            barberSaloonDB = context ?? throw new ArgumentNullException(nameof(context));
+            _imageService = imageService;
+            _logger = logger;
+        }
         public IActionResult Index()
         {
             return View();
@@ -19,12 +32,26 @@ namespace BarberSaloon.Controllers
             return View();
         }
 
-        // Varsayılan olarak bir veritabanı context'i (Entity Framework vb.)
-        private readonly BarberSaloonDBContext barberSaloonDB;
-        public CustomerController(BarberSaloonDBContext context)
+        [HttpPost]
+        public async Task<IActionResult> GenerateImage(string prompt, IFormFile file)
         {
-            barberSaloonDB = context ?? throw new ArgumentNullException(nameof(context));
+            var model = new ImageViewModel();
+            try
+            {
+                _logger.LogInformation("Starting image generation for prompt: {Prompt}", prompt); // Loglama
+                var imageUrl = await _imageService.GenerateImageAsync(prompt);
+                model.ImageUrl = imageUrl; // Görsel URL'sini modele ekleyin
+                _logger.LogInformation("Image generated successfully. URL: {ImageUrl}", imageUrl); // Loglama
+                return View("CustomerServiceResult", model); // Modeli başarılı view'a gönderin
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating image for prompt: {Prompt}", prompt); // Hata loglama
+                model.ErrorMessage = "Error generating image: " + ex.Message; // Hata mesajını modele ekleyin
+                return View("CustomerServiceResult", model); // Hatalı modeli aynı view'a gönderin
+            }
         }
+
 
         [HttpGet]
         public ActionResult SelectServiceAndBarber()

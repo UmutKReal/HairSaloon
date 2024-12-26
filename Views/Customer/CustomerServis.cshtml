@@ -1,5 +1,20 @@
-﻿
+﻿@model BarberSaloon.Services.ImageViewModel
 @{
+    ViewData["Title"] = "Customer Service";
     Layout = "_CustomerLayout";
-    <p>Servis</p>
 }
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Customer" asp-action="GenerateImage" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="prompt">Describe your desired image:</label>
+        <input type="text" class="form-control" id="prompt" name="prompt" placeholder="Enter description">
+    </div>
+    <div class="form-group">
+        <label for="file">Upload image:</label>
+        <input type="file" class="form-control-file" id="file" name="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Generate</button>
+</form>
+

@@ -15,10 +15,10 @@ builder.Services.AddDbContext<BarberSaloonDBContext>(options =>
 
 // Register services in the DI container
 builder.Services.AddHttpClient();  // Registers HttpClient for dependency injection
-builder.Services.AddScoped<LightXService>();  // Register the LightXService
+builder.Services.AddControllers();
+builder.Services.AddHttpClient<OpenAiImageService>();
+
 builder.Services.AddControllersWithViews();  // Add MVC controllers and views   Add services to the container.
-// Read the API key from appsettings.json
-builder.Services.Configure<LightXApiSettings>(builder.Configuration.GetSection("LightXApi"));
 
 var app = builder.Build();
 

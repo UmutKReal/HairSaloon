@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberSaloon.Migrations
 {
     [DbContext(typeof(BarberSaloonDBContext))]
-    [Migration("20241226014407_deneme")]
-    partial class deneme
+    [Migration("20241226142957_Add-Migration randevufixcontrol")]
+    partial class AddMigrationrandevufixcontrol
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
