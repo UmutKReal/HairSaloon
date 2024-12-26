@@ -105,6 +105,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark mx-3" asp-area="" asp-controller="Customer" asp-action="SelectServiceAndBarber">Randevu Al</a>
                         </li>
+                        <li class="nav-item">
+                            <!-- Logout button -->
+                            <button id="logoutButton" class="nav-link text-dark mx-3 btn btn-link" style="font-size: 30px; font-family: 'Jockey One', sans-serif; text-decoration: none;">Çıkış Yap</button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -129,5 +133,27 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/Account/Logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                if (response.ok) {
+                    alert('Logged out successfully');
+                    window.location.href = '/Account/Login'; // Redirect to login page
+                } else {
+                    alert('Logout failed');
+                }
+            } catch (error) {
+                console.error('Error logging out:', error);
+                alert('Logout failed');
+            }
+        });
+    </script>
 </body>
 </html>

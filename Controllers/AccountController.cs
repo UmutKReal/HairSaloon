@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BarberSaloon.Controllers
 {
@@ -110,6 +112,14 @@ namespace BarberSaloon.Controllers
             return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+        
         public IActionResult Failure()
         {
             return View();

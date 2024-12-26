@@ -3,12 +3,11 @@ using BarberSaloon.Models;
 using BarberSaloon.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
-
-//string connectionString = builder.Configuration.GetConnectionString("ConnectionStrings");
 
 builder.Services.AddDbContext<BarberSaloonDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -18,7 +17,15 @@ builder.Services.AddHttpClient();  // Registers HttpClient for dependency inject
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<OpenAiImageService>();
 
-builder.Services.AddControllersWithViews();  // Add MVC controllers and views   Add services to the container.
+builder.Services.AddControllersWithViews();  // Add MVC controllers and views
+
+// Add Authentication with Cookie Scheme
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login"; // Specify the login path
+        options.LogoutPath = "/Account/Logout"; // Specify the logout path
+    });
 
 var app = builder.Build();
 
@@ -33,13 +40,13 @@ else
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseSession();
+app.UseAuthentication(); // Add Authentication Middleware
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

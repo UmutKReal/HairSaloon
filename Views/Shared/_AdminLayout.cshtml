@@ -17,12 +17,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 
-
-    
     <!-- Bootstrap Personel butonları-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-
 
     <!-- Animasyon ve Stil için CSS -->
     <style>
@@ -121,6 +117,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark mx-3" asp-area="" asp-controller="Admin" asp-action="Randevular">Randevular</a>
                         </li>
+                        <li class="nav-item">
+                            <!-- Logout button -->
+                            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="nav-link text-dark mx-3">
+                                <button type="submit" class="btn btn-link" style="font-size: 30px; font-family: 'Jockey One', sans-serif; text-decoration: none;">Çıkış Yap</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -147,4 +149,3 @@
 
 </body>
 </html>
-
