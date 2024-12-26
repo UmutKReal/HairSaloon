@@ -55,10 +55,12 @@ namespace BarberSaloon.Controllers
                 .Where(a => a.EmployeeID == employee.EmployeeID)
                 .ToList();
 
+
+            var result = new List<DateTime>();
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+
             if (appointments != null)
             {
-                var result = new List<DateTime>();
-                DateTime today = DateTime.Today;
 
                 List<DateTime> DateTimeListesi = barberSaloonDB.appointmentDateTimeEmployees
                     .Where(a => a.EmployeeID == employee.EmployeeID)
@@ -80,7 +82,7 @@ namespace BarberSaloon.Controllers
 
                 for (int day = 0; day < 2; day++)
                 {
-                    var currentDate = today.AddDays(day);
+                    var currentDate = tomorrow.AddDays(day);
 
                     for (int hour = 10; hour < 20; hour++)
                     {
@@ -100,6 +102,8 @@ namespace BarberSaloon.Controllers
                                     }
                                     else
                                     {
+                                        if (DateTimeListesi.Contains(slot2))
+                                            continue;
                                         result.Add(slot2);
                                     }
                                 }
@@ -157,7 +161,8 @@ namespace BarberSaloon.Controllers
                                     index = DateTimeListesi.IndexOf(slot1);
                                     if (DurationTimeListesi[index] == 30)
                                     {
-                                        result.Add(slot2);
+                                        if(!DateTimeListesi.Contains(slot2))
+                                            result.Add(slot2);
                                         bayrak = true;
                                         continue;
                                     }
@@ -215,16 +220,17 @@ namespace BarberSaloon.Controllers
                         }
                     }
                 }
-
+                if(durationInMinutes==30)
+                    ViewBag.Duration = durationInMinutes;
+                else
+                    ViewBag.Duration = durationInMinutes;
                 return result;
             }
             else
             {
-                var result = new List<DateTime>();
-                DateTime today = DateTime.Today;
                 for (int day = 0; day < 2; day++)
                 {
-                    var currentDate = today.AddDays(day);
+                    var currentDate = tomorrow.AddDays(day);
 
                     for (int hour = 10; hour < 20; hour++)
                     {

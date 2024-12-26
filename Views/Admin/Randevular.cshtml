@@ -1,0 +1,48 @@
+﻿@model List<BarberSaloon.Models.AppointmentDateTimeEmployee>
+@{
+	ViewBag.Title = "Admin Paneli";
+	Layout = "_AdminLayout";
+}
+
+
+<h2>Randevu Listesi</h2>
+<table style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed;">
+    <thead>
+        <tr style="background-color: #808080; border-bottom: 2px solid #ddd; text-align: center;">
+            <th style="padding: 10px;">Berber Adı</th>
+            <th style="padding: 10px;">Berber Soyadı</th>
+            <th style="padding: 10px;">Randevu Saati</th>
+            <th style="padding: 10px;">Servis</th>
+            <th style="padding: 10px; text-align: right;">Servis Ücreti</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal toplam = 0;
+            if (!Model.Any())
+            {
+                <p>Şu anda herhangi bir randevu bulunmamaktadır.</p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;">@item.Employee.Name</td>
+                        <td style="padding: 10px;">@item.Employee.Surname</td>
+                        <td style="padding: 10px;">@item.AppointmentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td style="padding: 10px;">@item.Service.ServiceName</td>
+                        <td style="padding: 10px; text-align: right;">@item.Service.ServicePrice</td>
+                    </tr>
+                    toplam += item.Service.ServicePrice;
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr style="border-top: 2px solid #ddd; background-color: #808080;">
+            <td colspan="4" style="padding: 10px; text-align: right;"><strong>Toplam Ücret:</strong></td>
+            <td style="padding: 10px; text-align: right;"><strong>@toplam.ToString("C")</strong></td>
+        </tr>
+    </tfoot>
+</table>

@@ -14,8 +14,10 @@
     <select id="selectedTime" name="selectedTime">
         @foreach (var dt in ViewBag.AvailableSlots as List<DateTime>)
         {
-            // Gösterim formatı dd/MM/yyyy HH:mm
-            <option value="@dt.ToString("s")">@dt.ToString("dd/MM/yyyy HH:mm")</option>
+            // Başlangıç saatini al
+            var endTime = dt.AddMinutes((int)ViewBag.Duration); // Bitim saati hesaplanır
+            // Gösterim formatı dd/MM/yyyy HH:mm - HH:mm
+            <option value="@dt.ToString("s")">@dt.ToString("dd/MM/yyyy HH:mm") - @endTime.ToString("HH:mm")</option>
         }
     </select>
 
