@@ -48,7 +48,6 @@ namespace BarberSaloon.Controllers
                 Email = model.Email,
                 Password = model.Password // Şifre hash'ini sakla
             };
-
             // 3. Yeni müşteri ekle (burada şifre alanı gösterilmedi, isterseniz ekleyebilirsiniz)
             _context.Customers.Add(model);
             await _context.SaveChangesAsync();
@@ -66,7 +65,7 @@ namespace BarberSaloon.Controllers
         [HttpPost]
         public IActionResult AdminLogin(string username, string password)
         { 
-               if (username == "admin" && password == "admin123")
+               if ((username == "b211210026@sakarya.edu.tr" || username == "b221210008@sakarya.edu.tr") && password == "sau")
                 {
                     return RedirectToAction("Index", "Admin");
                 }
@@ -115,6 +114,7 @@ namespace BarberSaloon.Controllers
                 }
 
                 TempData["CustomerID"] = user.CustomerID;
+                TempData["UserName"] = user.Name;
                 // 3. Giriş başarılıysa, kullanıcıyı yönlendirelim (örneğin anasayfaya)
                 TempData["SuccessMessage"] = "Giriş başarılı!";
                 return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir

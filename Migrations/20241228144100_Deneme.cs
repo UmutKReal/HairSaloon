@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace BarberSaloon.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class Deneme : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +37,8 @@ namespace BarberSaloon.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Skills = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,31 +138,6 @@ namespace BarberSaloon.Migrations
                         principalTable: "Services",
                         principalColumn: "ServiceID",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Customers",
-                columns: new[] { "CustomerID", "Email", "Gender", "Name", "Password", "PhoneNumber", "Surname" },
-                values: new object[] { 1, "a@gmail.com", "Erkek", "Mehmet", "1", "5551234567", "Kara" });
-
-            migrationBuilder.InsertData(
-                table: "Employees",
-                columns: new[] { "EmployeeID", "Gender", "Name", "Surname" },
-                values: new object[,]
-                {
-                    { 1, "Erkek", "Ahmet", "Yılmaz" },
-                    { 2, "Erkek", "Veysel", "Aras" },
-                    { 3, "Kadın", "Ayşe", "Demir" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Services",
-                columns: new[] { "ServiceID", "EmployeeID", "ServiceDuration", "ServiceName", "ServicePrice" },
-                values: new object[,]
-                {
-                    { 1, 1, 30, "Sakal Tıraşı", 20.00m },
-                    { 2, 1, 60, "Saç Kesimi", 50.00m },
-                    { 3, 2, 60, "Renk", 70.00m }
                 });
 
             migrationBuilder.CreateIndex(

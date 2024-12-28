@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Randevu\**" />
+    <Content Remove="Views\Randevu\**" />
+    <EmbeddedResource Remove="Views\Randevu\**" />
+    <None Remove="Views\Randevu\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Images\BeardTrim.png" />
     <None Include="wwwroot\Images\HairCut.png" />
     <None Include="wwwroot\Images\HairStyling.png" />
@@ -21,10 +28,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Randevu\" />
   </ItemGroup>
 
 </Project>

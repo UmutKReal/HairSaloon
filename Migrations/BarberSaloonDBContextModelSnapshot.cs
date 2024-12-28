@@ -255,8 +255,7 @@ namespace BarberSaloon.Migrations
 
             modelBuilder.Entity("BarberSaloon.Models.Customer", b =>
                 {
-                    b.Navigation("Appointment")
-                        .IsRequired();
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("BarberSaloon.Models.Employee", b =>

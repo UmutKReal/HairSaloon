@@ -7,6 +7,10 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using Microsoft.Extensions.Hosting;
 
 namespace BarberSaloon.Controllers
 {
@@ -16,12 +20,14 @@ namespace BarberSaloon.Controllers
         private readonly BarberSaloonDBContext barberSaloonDB;
         private readonly OpenAiImageService _imageService;
         private readonly ILogger<CustomerController> _logger; // Logger tanımı
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public CustomerController(BarberSaloonDBContext context, OpenAiImageService imageService, ILogger<CustomerController> logger)
+        public CustomerController(BarberSaloonDBContext context, OpenAiImageService imageService, ILogger<CustomerController> logger, IHttpClientFactory httpClientFactory)
         {
             barberSaloonDB = context ?? throw new ArgumentNullException(nameof(context));
             _imageService = imageService;
             _logger = logger;
+            _httpClientFactory = httpClientFactory;
         }
         public IActionResult Index()
         {
@@ -30,6 +36,32 @@ namespace BarberSaloon.Controllers
         public IActionResult CustomerServis()
         {
             return View();
+        }
+
+        // PROFİL GÖRÜNTÜLEME
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            // Kullanıcı adını Identity'den çekiyoruz (login olmuşsa dolu gelir).
+            var userName = TempData["UserName"];
+            
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri("https://localhost:7294/api/");
+
+            // API tarafındaki "GET api/RestCustomer/Profile/{name}" endpoint'ini çağırıyoruz
+            var response = await client.GetAsync($"RestCustomer/Profile/{userName}");
+            if (!response.IsSuccessStatusCode)
+            {
+                // Hata durumunu handle edebilirsiniz
+                return Content("API hatası: " + response.StatusCode);
+            }
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var customer = JsonConvert.DeserializeObject<Customer>(jsonData);
+
+            TempData["UserName2"] = userName;
+            return View(customer); // Views/Customer/Profile.cshtml
         }
 
         [HttpPost]

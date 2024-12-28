@@ -1,0 +1,38 @@
+﻿@model BarberSaloon.Models.Customer
+
+@{
+    ViewBag.Title = "Profil Güncelleme";
+    Layout = "_CustomerLayout";
+}
+
+<h2>Profil Bilgilerim</h2>
+
+<form method="post" asp-action="Profile">
+    <!-- Name sabit kalabilir,
+         eğer değişebilir olmasını istemiyorsanız readonly veya hidden kullanabilirsiniz -->
+    <div class="form-group">
+        <label for="Name">Ad</label>
+        <input asp-for="Name" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="Surname">Soyad</label>
+        <input asp-for="Surname" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">E-Posta</label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="PhoneNumber">Telefon</label>
+        <input asp-for="PhoneNumber" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Şifre</label>
+        <input asp-for="Password" class="form-control" readonly />
+    </div>
+    
+</form>
