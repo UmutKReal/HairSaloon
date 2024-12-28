@@ -10,7 +10,7 @@ namespace BarberSaloon.Services
     public class OpenAiImageService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiKey = "";
+        private readonly string _apiKey = "";                                               // api  keyini buraya giriniz
         public OpenAiImageService(HttpClient httpClient)
         {
             _httpClient = httpClient;
