@@ -1,6 +1,4 @@
-﻿using BarberSaloon.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BarberSaloon.Models
 {
@@ -9,27 +7,27 @@ namespace BarberSaloon.Models
         [Key]
         public int CustomerID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "İsim zorunludur.")]
         public string? Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Soyisim zorunludur.")]
         public string? Surname { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email giriniz.")]
+        [EmailAddress(ErrorMessage = "Geçerli bir email adresi giriniz.")]
         public string? Email { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Telefon numarası zorunludur.")]
+        [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
         public string? PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Cinsiyet seçiniz.")]
         public string? Gender { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Şifre giriniz.")]
         public string? Password { get; set; }
 
         // Bire bir ilişki için Navigation Property
-        public Appointment Appointment { get; set; }
+        public Appointment? Appointment { get; set; }
     }
 }

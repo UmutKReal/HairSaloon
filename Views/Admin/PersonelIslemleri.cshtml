@@ -15,9 +15,10 @@
                     <th scope="col">İsim</th>
                     <th scope="col">Soyad</th>
                     <th scope="col">Cinsiyet</th>
+                    <th scope="col">Beceriler</th> <!-- New column for Skills -->
                     <th>
                         <a asp-action="PersonelEkle_Duzenle" class="btn btn-sm btn-success">
-                           Yeni
+                            Yeni
                         </a>
                     </th>
                 </tr>
@@ -25,25 +26,25 @@
             <tbody>
                 @foreach (var employee in Model)
                 {
-                        <tr>
-                            <td>@employee.EmployeeID</td>
-                            <td>@employee.Name</td>
-                            <td>@employee.Surname</td>
-                            <td>@employee.Gender</td>
-                            <td>
-                                <form asp-action="PersonelSil" asp-route-id="@employee.EmployeeID">
-                                    <div class="btn-group btn-group-sm">
+                    <tr>
+                        <td>@employee.EmployeeID</td>
+                        <td>@employee.Name</td>
+                        <td>@employee.Surname</td>
+                        <td>@employee.Gender</td>
+                        <td>@employee.Skills</td> <!-- New column for Skills -->
+                        <td>
+                            <form asp-action="PersonelSil" asp-route-id="@employee.EmployeeID" method="post">
+                                <div class="btn-group btn-group-sm">
                                     <a asp-action="PersonelEkle_Duzenle" asp-route-id="@employee.EmployeeID" class="btn btn-warning">
-                                           Düzenle
-                                        </a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
-                                            Sil
-                                        </button>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-                    
+                                        Düzenle
+                                    </a>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kaydı silmek istediğinizden emin misiniz?')">
+                                        Sil
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

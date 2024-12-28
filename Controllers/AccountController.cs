@@ -84,32 +84,42 @@ namespace BarberSaloon.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserLogin(string email, string password)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            // 1. Email ve şifre kontrolü
-            var user = await _context.Customers
-                .Where(c => c.Email == email)
-                .FirstOrDefaultAsync();
-            TempData["UserId"] = user.CustomerID;
-            if (user == null)
-            {
-                // Eğer kullanıcı bulunamazsa, hata mesajı ver
-                ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
-                return View();
-            }
+            ModelState.Remove("Appointment");
 
-            // 2. Şifre doğrulaması
-            if (password!=user.Password)
+            if (ModelState.IsValid)
             {
-                // Şifre yanlışsa, hata mesajı ver
-                ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
-                return View();
-            }
+                // 1. Email ve şifre kontrolü
+                var user = await _context.Customers
+                    .Where(c => c.Email == email)
+                    .FirstOrDefaultAsync();
+                
 
-            TempData["CustomerID"] = user.CustomerID;
-            // 3. Giriş başarılıysa, kullanıcıyı yönlendirelim (örneğin anasayfaya)
-            TempData["SuccessMessage"] = "Giriş başarılı!";
-            return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir
+
+                if (user == null)
+                {
+                    // Eğer kullanıcı bulunamazsa, hata mesajı ver
+                    ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
+                    return View();
+                }
+
+                TempData["UserId"] = user.CustomerID;
+
+                // 2. Şifre doğrulaması
+                if (password != user.Password)
+                {
+                    // Şifre yanlışsa, hata mesajı ver
+                    ModelState.AddModelError(string.Empty, "Geçersiz e-posta adresi veya şifre.");
+                    return View();
+                }
+
+                TempData["CustomerID"] = user.CustomerID;
+                // 3. Giriş başarılıysa, kullanıcıyı yönlendirelim (örneğin anasayfaya)
+                TempData["SuccessMessage"] = "Giriş başarılı!";
+                return RedirectToAction("Index", "Customer"); // Başka bir sayfaya yönlendirme yapılabilir
+            }
+            return View("Login");
         }
 
 

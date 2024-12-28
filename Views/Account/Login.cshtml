@@ -26,10 +26,14 @@
 
 <h2 class="mb-4">Giriş Sayfası</h2>
 
-@if (TempData["SuccessMessage"] != null)
+
+@if (ViewData.ModelState != null && ViewData.ModelState.IsValid == false)
 {
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
     </div>
 }
 
@@ -62,7 +66,7 @@
     <!-- Kullanıcı Login Formu (DB Bağlantılı, Email + Şifre) -->
     <div class="tab-pane fade show active p-3" id="userLoginTab" role="tabpanel" aria-labelledby="user-tab">
         <h3>Kullanıcı Girişi</h3>
-        @using (Html.BeginForm("UserLogin", "Account", FormMethod.Post))
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
         {
             <!-- roleType veya benzeri parametre kullanabilirsiniz -->
             @Html.Hidden("roleType", "user")

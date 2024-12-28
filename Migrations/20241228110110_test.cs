@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BarberSaloon.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMigrationrandevufixcontrol : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -74,7 +74,7 @@ namespace BarberSaloon.Migrations
                     ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ServiceDuration = table.Column<int>(type: "int", nullable: false),
                     ServicePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                    EmployeeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

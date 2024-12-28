@@ -58,7 +58,7 @@ namespace BarberSaloon.Data
                 .HasForeignKey(s => s.EmployeeID)
                 .OnDelete(DeleteBehavior.Restrict); // Cascade yerine Restrict kullanıldı
 
-
+            /*
             // (Opsiyonel) Seed verilerini ekleme
             modelBuilder.Entity<Service>().HasData(
                 new Service { ServiceID = 1, ServiceName = "Sakal Tıraşı", ServiceDuration = 30, ServicePrice = 20.00m, EmployeeID = 1 },
@@ -77,7 +77,7 @@ namespace BarberSaloon.Data
                 new Customer { CustomerID = 1, Name = "Mehmet", Surname = "Kara", Email = "a@gmail.com", PhoneNumber = "5551234567", Gender = "Erkek", Password = "1" }
             );
 
-            // Diğer seed verilerini buraya ekleyebilirsiniz
+            */ //Diğer seed verilerini buraya ekleyebilirsiniz
         }
     }
 }

@@ -10,7 +10,7 @@ namespace BarberSaloon.Models
         public int ServiceID { get; set; }
 
         [Required]
-        public string? ServiceName { get; set; }
+        public string ServiceName { get; set; }
 
         [Required]
         public int ServiceDuration { get; set; } // Süreyi dakika cinsinden belirtin
@@ -23,9 +23,9 @@ namespace BarberSaloon.Models
         public ICollection<AppointmentDateTime> AppointmentDateTimes { get; set; }
 
         // Employee ile bire çok ilişki için Foreign Key
-        public int EmployeeID { get; set; }
+        public int? EmployeeID { get; set; } // Nullable olarak işaretlendi
 
         [ForeignKey("EmployeeID")]
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; } // Nullable olarak işaretlendi
     }
 }

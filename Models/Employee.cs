@@ -1,7 +1,5 @@
-﻿using BarberSaloon.Models;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Xml.Linq;
 
 namespace BarberSaloon.Models
 {
@@ -21,11 +19,14 @@ namespace BarberSaloon.Models
         [Required(ErrorMessage = "Cinsiyet Seçiniz")]
         public string? Gender { get; set; }
 
+        [Required(ErrorMessage = "Uzmanlık Seçiniz")]
+        public string? Skills { get; set; }
+
         // Bire bir ilişki için Navigation Property
-        public ICollection<AppointmentDateTimeEmployee> AppointmentDateTimes { get; set; }
+        public ICollection<AppointmentDateTimeEmployee>? AppointmentDateTimes { get; set; }
 
         // Bire çok ilişki için Navigation Property
-        public ICollection<Service> Services { get; set; }
-        //public ICollection<TotalService> TotalServices { get; set; }
+        public ICollection<Service>? Services { get; set; }
+
     }
 }

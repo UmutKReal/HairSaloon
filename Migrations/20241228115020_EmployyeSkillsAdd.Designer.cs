@@ -4,6 +4,7 @@ using BarberSaloon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberSaloon.Migrations
 {
     [DbContext(typeof(BarberSaloonDBContext))]
-    partial class BarberSaloonDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241228115020_EmployyeSkillsAdd")]
+    partial class EmployyeSkillsAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,6 +131,18 @@ namespace BarberSaloon.Migrations
                     b.HasKey("CustomerID");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            CustomerID = 1,
+                            Email = "a@gmail.com",
+                            Gender = "Erkek",
+                            Name = "Mehmet",
+                            Password = "1",
+                            PhoneNumber = "5551234567",
+                            Surname = "Kara"
+                        });
                 });
 
             modelBuilder.Entity("BarberSaloon.Models.Employee", b =>
@@ -148,7 +163,6 @@ namespace BarberSaloon.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Skills")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
@@ -159,6 +173,29 @@ namespace BarberSaloon.Migrations
                     b.HasKey("EmployeeID");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeID = 1,
+                            Gender = "Erkek",
+                            Name = "Ahmet",
+                            Surname = "Yılmaz"
+                        },
+                        new
+                        {
+                            EmployeeID = 2,
+                            Gender = "Erkek",
+                            Name = "Veysel",
+                            Surname = "Aras"
+                        },
+                        new
+                        {
+                            EmployeeID = 3,
+                            Gender = "Kadın",
+                            Name = "Ayşe",
+                            Surname = "Demir"
+                        });
                 });
 
             modelBuilder.Entity("BarberSaloon.Models.Service", b =>
@@ -187,6 +224,32 @@ namespace BarberSaloon.Migrations
                     b.HasIndex("EmployeeID");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceID = 1,
+                            EmployeeID = 1,
+                            ServiceDuration = 30,
+                            ServiceName = "Sakal Tıraşı",
+                            ServicePrice = 20.00m
+                        },
+                        new
+                        {
+                            ServiceID = 2,
+                            EmployeeID = 1,
+                            ServiceDuration = 60,
+                            ServiceName = "Saç Kesimi",
+                            ServicePrice = 50.00m
+                        },
+                        new
+                        {
+                            ServiceID = 3,
+                            EmployeeID = 2,
+                            ServiceDuration = 60,
+                            ServiceName = "Renk",
+                            ServicePrice = 70.00m
+                        });
                 });
 
             modelBuilder.Entity("BarberSaloon.Models.Appointment", b =>

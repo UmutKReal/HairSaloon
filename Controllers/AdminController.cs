@@ -53,7 +53,7 @@ namespace BarberSaloon.Controllers
 		// POST: Personel/AddOrEdit
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeID,Name,Surname,Gender")] Employee employee)
+		public async Task<IActionResult> PersonelEkle_Duzenle([Bind("EmployeeID,Name,Surname,Gender,Skills")] Employee employee)
 		{
 			if (!ModelState.IsValid) return View(employee);
 
@@ -85,39 +85,46 @@ namespace BarberSaloon.Controllers
 			return RedirectToAction(nameof(PersonelIslemleri));
 		}
 
-		//ADD AND EDİT
-		[HttpGet]
-		public IActionResult AddService(int id = 0)
-		{
-			if (id == 0)
-			{
-				return View(new Service());
-			}
-			else
-			{
-				return View(_context.Services.Find(id));
-			}
+        [HttpGet]
+        public IActionResult AddService(int id = 0)
+        {
+            if (id == 0)
+            {
+                return View(new Service());
+            }
+            else
+            {
+                return View(_context.Services.Find(id));
+            }
+        }
 
-		}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddService(Service service)
+        {
+            ModelState.Remove("Employee");
+            ModelState.Remove("AppointmentDateTimes");
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AddService(Service service)
-		{
-			//if (!ModelState.IsValid)  return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
-			if (service.ServiceID == 0)
-			{
-				await _context.Services.AddAsync(service); // Servisi asenkron olarak ekle            
-			}
-			else
-			{
-				_context.Services.Update(service);
-			}
-			await _context.SaveChangesAsync(); // Veritabanı değişikliklerini kaydet
-			return RedirectToAction(nameof(Index));
-		}
+            if (!ModelState.IsValid)
+            {
+                return View(service); // Eğer validasyon hatası varsa aynı view'ı göster
+            }
 
-		[HttpPost]
+            if (service.ServiceID == 0)
+            {
+                // Initially, set EmployeeID to a default value or leave it as is
+                await _context.Services.AddAsync(service); // Servisi asenkron olarak ekle            
+            }
+            else
+            {
+                _context.Services.Update(service);
+            }
+
+            await _context.SaveChangesAsync(); // Veritabanı değişikliklerini kaydet
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
 		public async Task<IActionResult> DeleteService(int id)
 		{
 			var service = await _context.Services.FindAsync(id); // ID'ye göre servisi asenkron olarak bul
@@ -129,5 +136,57 @@ namespace BarberSaloon.Controllers
 			await _context.SaveChangesAsync(); // Değişiklikleri kaydet
 			return RedirectToAction("Index");
 		}
-	}
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateService(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound(); // Service ID must be provided
+            }
+
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
+            {
+                return NotFound(); // Service not found
+            }
+
+            return View(service); // Return the view with the service to be updated
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateService(Service service)
+        {
+            ModelState.Remove("Employee");
+            ModelState.Remove("AppointmentDateTimes");
+
+            if (!ModelState.IsValid)
+            {
+                return View(service); // Return the same view with validation errors
+            }
+
+            var serviceToUpdate = await _context.Services.FindAsync(service.ServiceID);
+            if (serviceToUpdate == null)
+            {
+                return NotFound(); // Service not found
+            }
+
+            // Update the service properties
+            serviceToUpdate.ServiceName = service.ServiceName;
+            serviceToUpdate.ServiceDuration = service.ServiceDuration;
+            serviceToUpdate.ServicePrice = service.ServicePrice;
+
+            // Optionally update the EmployeeID if it is provided
+            if (service.EmployeeID.HasValue)
+            {
+                serviceToUpdate.EmployeeID = service.EmployeeID.Value;
+            }
+
+            _context.Services.Update(serviceToUpdate);
+            await _context.SaveChangesAsync(); // Save the changes to the database
+
+            return RedirectToAction(nameof(Index)); // Redirect to the index page after successful update
+        }
+    }
 }

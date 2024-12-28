@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberSaloon.Migrations
 {
     [DbContext(typeof(BarberSaloonDBContext))]
-    [Migration("20241226142957_Add-Migration randevufixcontrol")]
-    partial class AddMigrationrandevufixcontrol
+    [Migration("20241228110110_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -203,7 +203,7 @@ namespace BarberSaloon.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"));
 
-                    b.Property<int>("EmployeeID")
+                    b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceDuration")
@@ -303,8 +303,7 @@ namespace BarberSaloon.Migrations
                     b.HasOne("BarberSaloon.Models.Employee", "Employee")
                         .WithMany("Services")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Employee");
                 });
